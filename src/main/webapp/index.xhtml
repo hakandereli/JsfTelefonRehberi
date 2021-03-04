@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Telefon Rehberi</title>
+        <h:outputStylesheet name="/css/bootstrap.min.css"/>
+        <style type="text/css">
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            th, td {
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even){background-color: #f2f2f2}
+            th {
+                background-color: #4CAF50;
+                color: white;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:form>
+            <center>
+                <h2><h:outputText value="Rehber"/></h2>
+            </center>
+            <p:dataTable
+                     binding="#{table}"
+                     filteredValue="#{rehberMB.filteredRehberlist}"
+                     value="#{rehberMB.rehberList}"
+                     var="row"
+                     class="table table-striped table-hover table-bordered"
+                     paginator="true"
+                     rows="5"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink}
+                     {PreviousPageLink} {PageLinks} {NextPageLink}
+                     {LastPageLink} {RowsPerPageDropdown}"
+                     rowsPerPageTemplate="5,10,15">
+            >
+                <p:column headerText="ID" filterBy="#{row.id}" filterMatchMode="contains">
+                    <h:outputText value="#{row.id}"/>
+                </p:column>
+                <p:column headerText="İsim" filterBy="#{row.isim}" filterMatchMode="contains">
+                    <h:outputText value="#{row.isim}"/>
+                </p:column>
+                <p:column headerText="Telefon" filterBy="#{row.telefon}" filterMatchMode="contains">
+                    <h:outputText value="#{row.telefon}"/>
+                </p:column>
+                <p:column headerText="Update">
+                    <h:commandButton action = "#{rehberMB.edit(row.id)}" value="Update" class="btn btn-primary"></h:commandButton>
+                </p:column>
+                <p:column headerText="Delete">
+                    <h:commandButton action = "#{rehberMB.fetchDeleteRow(row.id)}" value="Delete" class="btn btn-danger"></h:commandButton>
+                </p:column>
+<!--                    <p:commandButton value="Delete" action="#{rehberMB.delete}" update="message" styleClass="ui-button-danger" icon="pi pi-times">-->
+<!--                        <p:confirm header="Bilgilendirme" message="asd" icon="pi pi-info-circle"/>-->
+<!--                    </p:commandButton>-->
+            </p:dataTable>
+            <center><h:commandButton action = "create.xhtml?faces-redirect=true" value="Yeni Kişi" class="btn btn-success"></h:commandButton> </center>
+        </h:form>
+    </h:body>
+</html>
